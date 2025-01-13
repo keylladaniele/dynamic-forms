@@ -1,0 +1,36 @@
+<div class="container">
+  <h1>Cadastro de Gatos 🐾</h1>
+
+  <div class="flex justify-center gap-4 mb-6">
+    <button
+      [ngClass]="{ active: catType === 'domestic' }"
+      (click)="changeCatType('domestic')"
+    >
+      Doméstico
+    </button>
+    <button
+      [ngClass]="{ active: catType === 'wild' }"
+      (click)="changeCatType('wild')"
+    >
+      Selvagem
+    </button>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div *ngFor="let field of fields">
+      <label [for]="field.name">{{ field.label }}</label>
+      <input
+        *ngIf="field.type !== 'checkbox'"
+        [type]="field.type"
+        [formControlName]="field.name"
+        [id]="field.name"
+      />
+      <div *ngIf="field.type === 'checkbox'" class="flex items-center">
+        <input [formControlName]="field.name" [id]="field.name" type="checkbox" />
+        <label [for]="field.name">{{ field.label }}</label>
+      </div>
+    </div>
+
+    <button type="submit">Enviar</button>
+  </form>
+</div>
