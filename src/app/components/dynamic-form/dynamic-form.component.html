@@ -1,16 +1,20 @@
 <div class="container">
   <h1>Cadastro de Gatos 🐾</h1>
 
-  <div class="flex justify-center gap-4 mb-6">
+  <div
+    class="flex justify-center items-center gap-4 mb-6 buttons-container"
+  >
     <button
       [ngClass]="{ active: catType === 'domestic' }"
       (click)="changeCatType('domestic')"
+      class="category-button"
     >
       Doméstico
     </button>
     <button
       [ngClass]="{ active: catType === 'wild' }"
       (click)="changeCatType('wild')"
+      class="category-button"
     >
       Selvagem
     </button>
@@ -18,19 +22,42 @@
 
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <div *ngFor="let field of fields">
-      <label [for]="field.name">{{ field.label }}</label>
+      <label [for]="field.name" class="flex justify-between">
+        {{ field.label }}
+        <span
+          *ngIf="
+            form.controls[field.name] &&
+            form.controls[field.name].errors?.['required'] &&
+            form.controls[field.name].touched
+          "
+          class="error-message"
+        >
+          (Campo obrigatório)
+        </span>
+      </label>
       <input
         *ngIf="field.type !== 'checkbox'"
         [type]="field.type"
         [formControlName]="field.name"
         [id]="field.name"
+        (focus)="clearError(field.name)"
+        class="w-full border border-gray-300 rounded-md p-2"
       />
       <div *ngIf="field.type === 'checkbox'" class="flex items-center">
-        <input [formControlName]="field.name" [id]="field.name" type="checkbox" />
-        <label [for]="field.name">{{ field.label }}</label>
+        <input
+          [formControlName]="field.name"
+          [id]="field.name"
+          type="checkbox"
+          class="mr-2"
+        />
       </div>
     </div>
 
-    <button type="submit">Enviar</button>
+    <button
+      type="submit"
+      class="bg-purple-500 text-white py-2 px-4 rounded-md hover:bg-purple-600"
+    >
+      Enviar
+    </button>
   </form>
 </div>

@@ -33,18 +33,33 @@ export class DynamicFormComponent {
     this.form = this.fb.group(formControls);
   }
 
-  onSubmit() {
-    if (this.form.valid) {
-      alert('Formulário enviado com sucesso! 🎉');
-      console.log(this.form.value);
-    } else {
-      alert('Preencha os campos obrigatórios.');
-    }
-  }
-
   changeCatType(catType: string) {
     this.catType = catType;
     this.loadForm();
   }
+
+  onSubmit(): void {
+    if (this.form.invalid) {
+      const firstInvalidField = Object.keys(this.form.controls).find(
+        (controlName) => this.form.controls[controlName].invalid
+      );
+
+      if (firstInvalidField) {
+        const invalidElement = document.getElementById(firstInvalidField);
+        invalidElement?.focus();
+      }
+
+      this.form.markAllAsTouched();
+      return;
+    }
+
+    console.log('Formulário enviado:', this.form.value);
+  }
+
+  clearError(fieldName: string): void {
+    this.form.controls[fieldName].markAsUntouched();
+  }
+
+
 
 }

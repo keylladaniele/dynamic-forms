@@ -2,6 +2,7 @@ $background-light: #f8f1ff;
 $lilac: #c084fc;
 $lilac-dark: #9333ea;
 $lilac-border: #d8b4fe;
+$error-red: #ef4444;
 
 .container {
   background-color: $background-light;
@@ -19,29 +20,80 @@ $lilac-border: #d8b4fe;
     margin-bottom: 1rem;
   }
 
+  .buttons-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 20px; // Ajustado para a margem inferior dos botões
+
+    .category-button {
+      background-color: $lilac-dark;
+      color: white;
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background-color: $lilac;
+        transform: scale(1.05);
+      }
+
+      &.active {
+        background-color: $background-light;
+        color: $lilac-dark;
+        border: 2px solid $lilac-dark;
+      }
+    }
+  }
+
   form {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 1.5rem;
 
     label {
       color: $lilac-dark;
       font-weight: 500;
       margin-bottom: 0.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .error-message {
+        color: $error-red;
+        font-size: 0.85rem;
+        margin-left: 0.5rem;
+      }
     }
 
     input[type='text'],
-    input[type='number'],
-    input[type='checkbox'] {
+    input[type='number'] {
       border: 2px solid $lilac-border;
       border-radius: 4px;
       padding: 0.5rem;
       font-size: 1rem;
       width: 100%;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
 
       &:focus {
         outline: none;
         border-color: $lilac-dark;
+        box-shadow: 0 0 4px $lilac;
+      }
+
+      &.error {
+        border-color: $error-red;
+
+        &:focus {
+          border-color: $error-red;
+          box-shadow: 0 0 4px $error-red;
+        }
       }
     }
 
@@ -59,35 +111,12 @@ $lilac-border: #d8b4fe;
       font-size: 1rem;
       cursor: pointer;
       text-align: center;
+      transition: all 0.3s ease;
 
       &:hover {
         background-color: $lilac;
+        transform: scale(1.05);
       }
     }
   }
- 
-button {
-  background-color: $lilac-dark;
-  color: white;
-  padding: 0.8rem 1.5rem;
-  border: none;
-  border-radius: 8px;
-  font-size: 1.2rem;
-  font-weight: 600;
-  cursor: pointer;
-  text-align: center;
-  transition: all 0.3s ease;
-
-  &:hover {
-    background-color: $lilac;
-    transform: scale(1.05);
-  }
-
-  &.active {
-    background-color: $background-light;
-    color: $lilac-dark;
-    border: 2px solid $lilac-dark;
-  }
-}
-
 }
