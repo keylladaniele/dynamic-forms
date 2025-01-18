@@ -2,13 +2,14 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { FormConfigService } from '../../services/form-config.service';
 import { CommonModule } from '@angular/common';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-dynamic-form',
   standalone: true,
   imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './dynamic-form.component.html',
-  styleUrl: './dynamic-form.component.scss'
+  styleUrls: ['./dynamic-form.component.scss']
 })
 export class DynamicFormComponent {
   form!: FormGroup;
@@ -54,12 +55,25 @@ export class DynamicFormComponent {
     }
 
     console.log('Formulário enviado:', this.form.value);
+
+    this.showSuccessAlert();  
   }
+
 
   clearError(fieldName: string): void {
     this.form.controls[fieldName].markAsUntouched();
   }
 
-
+  showSuccessAlert() {
+    Swal.fire({
+      icon: 'success',
+      title: 'Formulário enviado com sucesso!',
+      text: 'Os dados foram salvos corretamente.',
+      confirmButtonText: 'OK',
+      confirmButtonColor: "#9333ea",
+    }).then(() => {
+      this.form.reset();
+    });
+  }
 
 }
